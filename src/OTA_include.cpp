@@ -5,8 +5,6 @@
 #include <OTA_include.h>
 #include "ticker.h"
 
-#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 
 // EEPROM-Adressen

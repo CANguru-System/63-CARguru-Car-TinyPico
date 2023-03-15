@@ -1,15 +1,15 @@
 ﻿
 /* ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
- * <CANguru-Buch@web.de> wrote this file. As long as you retain this
+ * <CARguru-Buch@web.de> wrote this file. As long as you retain this
  * notice you can do whatever you want with this stuff. If we meet some day,
  * and you think this stuff is worth it, you can buy me a beer in return
  * Gustav Wostrack
  * ----------------------------------------------------------------------------
  */
 
-#ifndef CANguruDefs
-#define CANguruDefs
+#ifndef CARguruDefs
+#define CARguruDefs
 
 #define CAN_FRAME_SIZE 13 /* maximum datagram size */
 
@@ -78,7 +78,7 @@ enum commDir
 #define DEVTYPE_MS2 0x0030
 #define DEVTYPE_WDEV 0x00E0
 #define DEVTYPE_CS2 0x00FF
-#define DEVTYPE_FirstCANguru 0x004F
+#define DEVTYPE_FirstCARguru 0x004F
 #define DEVTYPE_BASE 0x0050
 #define DEVTYPE_SERVO 0x0053
 #define DEVTYPE_RM 0x0054
@@ -90,7 +90,7 @@ enum commDir
 #define DEVTYPE_CAR_CAR 0x005A
 #define DEVTYPE_CAR_RM 0x005B
 #define DEVTYPE_CAR_SERVO 0x005C
-#define DEVTYPE_LastCANguru 0x005F
+#define DEVTYPE_LastCARguru 0x005F
 
 #define BASE_Offset 0x01
 #define DECODER_Offset 0x02
@@ -112,9 +112,9 @@ enum commDir
 #define LokDiscovery_R LokDiscovery+1
 #define MFXVerify 0x07
 #define MFXVerify_R MFXVerify+1
-#define Lok_Speed           0x08
-#define Lok_Direction       0x0A
-#define Lok_Function        0x0C
+#define Lok_Speed 0x08
+#define Lok_Direction 0x0A
+#define Lok_Function 0x0C
 #define SYS_STAT 0x0B   //System - Status (sendet geänderte Konfiguration)
 #define ReadConfig   0x0E
 #define ReadConfig_R   ReadConfig+1
@@ -156,6 +156,8 @@ enum commDir
 #define SEND_IP 0x64
 #define SEND_IP_R SEND_IP + 1
 #define INIT_COMPLETE 0x66
+#define Lok_Battery 0x67
+#define Lok_Battery_R Lok_Battery + 1
 #define CALL4CONNECT 0x88
 #define sendCntLokBuffer 0x90
 #define sendCntLokBuffer_R 0x91

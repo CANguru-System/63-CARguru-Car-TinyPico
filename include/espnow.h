@@ -1,7 +1,7 @@
 
 /* ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
- * <CANguru-Buch@web.de> wrote this file. As long as you retain this
+ * <CARguru-Buch@web.de> wrote this file. As long as you retain this
  * notice you can do whatever you want with this stuff. If we meet some day,
  * and you think this stuff is worth it, you can buy me a beer in return
  * Gustav Wostrack
@@ -36,48 +36,7 @@ const esp_now_peer_info_t *masterNode = &master;
 uint8_t opFrame[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 bool got1CANmsg = false;
 byte cnt = 0;
-String ssid0 = "CNgrSLV";
 uint8_t hasharr[] = {0x00, 0x00};
-
-Ticker tckr;
-const float tckrTime = 0.025;
-
-uint16_t secs;
-
-//*********************************************************************************************************
-// das Aufblitzen der LED auf dem ESP32-Modul wird mit diesem Timer
-// nach Anstoß durch die CANguru-Bridge (BlinkAlive) umgesetzt
-void timer1s()
-{
-  if (secs > 0)
-  {
-    // jede 0.025te Sekunde Licht an oder aus
-    if (secs % 2 == 0)
-    {
-      // bei gerader Zahl aus
-      LED_OFF();
-    }
-    else
-    {
-      // bei gerader Zahl an
-      LED_ON();
-    }
-    secs--;
-  }
-  else
-  {
-    LED_OFF();
-  }
-}
-
-// meldet den Timer an
-void stillAliveBlinkSetup()
-{
-  tckr.attach(tckrTime, timer1s); // each sec
-  // turn the LED off by making the voltage LOW
-  LED_OFF();
-  secs = 0;
-}
 
 /*
 Kollisionsfreiheit zum CS1 Protokoll:
@@ -108,25 +67,6 @@ void generateHash(uint8_t offset)
   bitWrite(hash, 9, 1);
   hasharr[0] = hash >> 8;
   hasharr[1] = hash;
-}
-
-// startet WLAN im AP-Mode, damit meldet sich der Decoder beim Master
-void startAPMode()
-{
-  Serial.println();
-  Serial.println("WIFI Connect AP Mode");
-  Serial.println("--------------------");
-  WiFi.persistent(false); // Turn off persistent to fix flash crashing issue.
-  WiFi.mode(WIFI_OFF);    // https://github.com/esp8266/Arduino/issues/3100
-  WiFi.mode(WIFI_AP);
-
-  // Connect to Wi-Fi
-  String ssid1 = WiFi.softAPmacAddress();
-  ssid0 = ssid0 + ssid1;
-  char ssid[30];
-  ssid0.toCharArray(ssid, 30);
-  WiFi.softAP(ssid); // Name des Access Points
-  Serial.println(ssid);
 }
 
 // Fehlermeldungen, die hoffentlich nicht gebraucht werden
@@ -163,7 +103,7 @@ void printESPNowError(esp_err_t Result)
   }
 }
 
-// alle Meldungen von der CANguru-Bridge kommen hier rein
+// alle Meldungen von der CARguru-Bridge kommen hier rein
 // und werden hier ausgewertet und evtl. weiter geleitet
 void OnDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len)
 {
@@ -181,6 +121,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len)
     return;
   }
   got1CANmsg = false;
+//  Serial.println(opFrame[0x01], HEX);
   switch (opFrame[0x01])
   {
     // wird hier bearbeitet
@@ -198,8 +139,8 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len)
   // bewirkt das Aufblitzen der LED
   // wird hier bearbeitet
   case BlinkAlive:
-    if (secs < 10)
-      secs = 10;
+//    if (secs < 10)
+//      secs = 10;
     break;
     // wird hier bearbeitet
   case PING:
@@ -212,8 +153,6 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len)
   {
     CONFIG_Status_Request = true;
     CONFIGURATION_Status_Index = (Kanals)opFrame[data4];
-    if (CONFIGURATION_Status_Index > 0 && secs < 100)
-      secs = 100;
     got1CANmsg = true;
   }
   break;
@@ -261,7 +200,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "OK" : "Fail");
 }
 
-// der Master (CANguru-Bridge) wird registriert
+// der Master (CARguru-Bridge) wird registriert
 void addMaster()
 {
   if (esp_now_init() == ESP_OK)
@@ -282,7 +221,7 @@ void addMaster()
   // Add the remote master node to this slave node
   if (esp_now_add_peer(masterNode) == ESP_OK)
   {
-    Serial.println("Master Added As Peer!");
+    Serial.println("CARguru-Bridge found!");
   }
 }
 

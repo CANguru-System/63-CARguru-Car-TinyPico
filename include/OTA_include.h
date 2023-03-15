@@ -20,8 +20,7 @@ const uint16_t adr_IP1 = adr_IP0 + 0x01;
 const uint16_t adr_IP2 = adr_IP1 + 0x01;
 const uint16_t adr_IP3 = adr_IP2 + 0x01;
 const uint16_t adr_reset = adr_IP3 + 0x01;
-const uint16_t adr_motorDirection = adr_reset + 0x01;
-const uint16_t lastAdr0 = adr_motorDirection + 0x01;
+const uint16_t lastAdr0 = adr_reset + 0x01;
 
 const uint8_t startWithOTA = 0x77;
 const uint8_t startWithoutOTA = 0x55;
