@@ -17,9 +17,9 @@
 
 #include "sound.h"
 #include <LittleFS.h>
-#include "soc/rtc_io_reg.h"
+//* #include "soc/rtc_io_reg.h"
 
-const gpio_num_t DacPin = GPIO_NUM_25;
+const gpio_num_t DacPin = GPIO_NUM_20;
 const uint16_t sampleRate = 16000;
 const uint32_t clockPeriod = 4000000;
 
@@ -50,7 +50,7 @@ void IRAM_ATTR onSoundTimer()
     return;
   currValue = WaveData[DataIdx_curr];
   if (currValue != lastValue)
-    SET_PERI_REG_BITS(RTC_IO_PAD_DAC1_REG, RTC_IO_PDAC1_DAC, currValue, RTC_IO_PDAC1_DAC_S);
+//*    SET_PERI_REG_BITS(RTC_IO_PAD_DAC1_REG, RTC_IO_PDAC1_DAC, currValue, RTC_IO_PDAC1_DAC_S);
   //    dacWrite(DacPin, WavData[DataIdx_curr]); // write out the data
   lastValue = currValue;
   DataIdx_curr++;
@@ -134,7 +134,7 @@ int Car_Audio_Wav_Class::PlayWav()
     curr_Wave = this;
     DataIdx_curr = AUDIO_DATA_START;
     lastValue = 0x7F;
-    dacWrite(DacPin, lastValue); // Set speaker to mid point to stop any clicks during sample playback
+//*    dacWrite(DacPin, lastValue); // Set speaker to mid point to stop any clicks during sample playback
     noSound = false;
     WaveData = WaveDataPtr;
   }
@@ -145,6 +145,6 @@ int Car_Audio_Wav_Class::PlayWav()
 void Car_Audio_Wav_Class::StopPlaying()
 {
   noSound = true;
-  dacWrite(DacPin, 0x00); // Set speaker to mid point to stop any clicks during sample playback
+//*  dacWrite(DacPin, 0x00); // Set speaker to mid point to stop any clicks during sample playback
   Serial.println("Closing audio file");
 }

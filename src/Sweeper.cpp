@@ -10,7 +10,6 @@
 
 #include <Sweeper.h>
 #include <Ticker.h>
-#include <TinyPICO.h>
 #include <CARguruDefs.h>
 
 // SOUND ////////////////////////////////////////////////////////////

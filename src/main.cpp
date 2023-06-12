@@ -9,7 +9,6 @@
  */
 
 #include "Arduino.h"
-#include <TinyPICO.h>
 #include "Sweeper.h"
 #include <WiFi.h>
 #include <ESPmDNS.h>
@@ -28,7 +27,6 @@
 Car_Audio_Wav_Class Martinshorn_Wave; // Martinshorn theme
 Car_Audio_Wav_Class Hupe_Wave;        // Martinshorn theme
                                       // Use GPIO 25, one of the 2 DAC pins and timer 0
-TinyPICO tinypico = TinyPICO();
 /*
 Variablen der LEDs
 */
@@ -134,12 +132,12 @@ IPAddress IP;
 
 void LED_ON()
 {
-  tinypico.DotStar_Show();
+//*  tinypico.DotStar_Show();
 }
 
 void LED_OFF()
 {
-  tinypico.DotStar_Clear();
+//*  tinypico.DotStar_Clear();
 }
 
 //*********************************************************************************************************
@@ -245,8 +243,8 @@ void setup()
 {
   Serial.begin(115200);
   // Brightness is 0-255. We set it to 1/3 brightness here
-  tinypico.DotStar_SetBrightness(smallBright);
-  tinypico.DotStar_SetPixelColor(0xf00000); // green
+//*  tinypico.DotStar_SetBrightness(smallBright);
+//*  tinypico.DotStar_SetPixelColor(0xf00000); // green
   // turn the LED off by making the voltage LOW
   LED_ON(); // red
   Serial.println("\r\n\r\nCARguru - CAR");
@@ -786,7 +784,7 @@ void execute_funcs(uint8_t func)
         func_Rundumleuchten(val);
         break;
       case battery_func:
-        voltage = tinypico.GetBatteryVoltage();    // 3.14
+//*        voltage = tinypico.GetBatteryVoltage();    // 3.14
         opFrame[data5] = voltage;                  // 3
         voltage = (voltage - opFrame[data5]) * 10; // 1.4
         opFrame[data6] = voltage;                  // 1
